@@ -14,7 +14,6 @@
 ### Association
 has_many :purchase
 has_many :items
-belongs_to :users
 
 ## Items テーブル
 
@@ -32,7 +31,7 @@ belongs_to :users
 
 ## Association
 has_one :purchase
-belongs_to :items
+belongs_to :users
 
 ## Purchase テーブル
 
@@ -44,7 +43,7 @@ belongs_to :items
 ## Association
 belongs_to :users
 belongs_to :address
-belongs_to :purchase
+belongs_to :items
 
 ## Address テーブル
 
@@ -57,3 +56,6 @@ belongs_to :purchase
 | street_address       | string     | null: false |
 | building             | string     |             |
 | phone_number         | string     | null: false |
+
+## Association
+belongs_to :purchase
