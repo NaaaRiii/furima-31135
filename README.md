@@ -12,7 +12,7 @@
 | birthday            | date   | null: false               |
 
 ### Association
-has_many :purchase
+has_many :purchases
 has_many :items
 
 ## Items テーブル
@@ -41,9 +41,9 @@ belongs_to :users
 | item                | references | foreign_key: true |
 
 ## Association
-belongs_to :users
+belongs_to :user
 belongs_to :address
-belongs_to :items
+belongs_to :item
 
 ## Address テーブル
 
@@ -58,4 +58,4 @@ belongs_to :items
 | phone_number         | string     | null: false |
 
 ## Association
-belongs_to :purchase
+has_one :purchase
