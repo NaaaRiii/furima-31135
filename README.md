@@ -2,7 +2,7 @@
 
 | Column              | Type   | Options                   |
 | ------------------- | ------ | ------------------------- |
-| nickname            | string | null: false               |
+| nickname            | string | null: false, unique: true |
 | email               | string | null: false, unique: true |
 | encrypted_password  | string | null: false               |
 | first_name          | string | null: false               |
@@ -53,7 +53,7 @@ belongs_to :item
 | prefecture_id        | integer    | null: false       |
 | city                 | string     | null: false       |
 | street_address       | string     | null: false       |
-| building             | string     | foreign_key: true |
+| building             | string     |                   |
 | phone_number         | string     | null: false       |
 | purchase             | references | foreign_key: true |
 
