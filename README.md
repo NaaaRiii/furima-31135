@@ -47,14 +47,15 @@ belongs_to :item
 
 ## Address テーブル
 
-| Column               | Type       | Options                        |
-| -------------------- | ---------- | ------------------------------ |
-| post_number          | string     | null: false, foreign_key: true |
-| prefecture_id        | integer    | null: false, foreign_key: true |
-| city                 | string     | null: false, foreign_key: true |
-| street_address       | string     | null: false, foreign_key: true |
-| building             | string     | foreign_key: true              |
-| phone_number         | string     | null: false, foreign_key: true |
+| Column               | Type       | Options           |
+| -------------------- | ---------- | ----------------- |
+| post_number          | string     | null: false       |
+| prefecture_id        | integer    | null: false       |
+| city                 | string     | null: false       |
+| street_address       | string     | null: false       |
+| building             | string     | foreign_key: true |
+| phone_number         | string     | null: false       |
+| purchase             | references | foreign_key: true |
 
 ## Association
 belongs_to :purchase
