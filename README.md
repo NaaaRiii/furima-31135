@@ -23,15 +23,15 @@ has_many :items
 | product_description  | text       | null: false       |
 | category_id          | integer    | null: false       |
 | product_condition_id | integer    | null: false       |
-| shipping_charges_id  | integer    | null: false       |
+| shipping_charge_id   | integer    | null: false       |
 | shipping_area_id     | integer    | null: false       |
 | days_ship_id         | integer    | null: false       |
-| price                | string     | null: false       |
+| price                | integer    | null: false       |
 | user                 | references | foreign_key: true |
 
 ## Association
 has_one :purchase
-belongs_to :users
+belongs_to :user
 
 ## Purchase テーブル
 
@@ -42,20 +42,19 @@ belongs_to :users
 
 ## Association
 belongs_to :user
-belongs_to :address
+has_one    :address
 belongs_to :item
 
 ## Address テーブル
 
-| Column               | Type       | Options     |
-| -------------------- | ---------- | ----------- |
-| post_number          | string     | null: false |
-| prefectures_id       | integer    | null: false |
-| city                 | string     | null: false |
-| product_condition_id | integer    | null: false |
-| street_address       | string     | null: false |
-| building             | string     |             |
-| phone_number         | string     | null: false |
+| Column               | Type       | Options                        |
+| -------------------- | ---------- | ------------------------------ |
+| post_number          | string     | null: false, foreign_key: true |
+| prefecture_id        | integer    | null: false, foreign_key: true |
+| city                 | string     | null: false, foreign_key: true |
+| street_address       | string     | null: false, foreign_key: true |
+| building             | string     | foreign_key: true              |
+| phone_number         | string     | null: false, foreign_key: true |
 
 ## Association
-has_one :purchase
+belongs_to :purchase
