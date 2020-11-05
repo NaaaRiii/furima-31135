@@ -34,6 +34,11 @@ describe User do
         another_user.valid?
         expect(another_user.errors.full_messages).to include("Email has already been taken")
       end
+      it "emailは、@を含む必要がある" do
+        @user.email = "samplesample.com"
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Email is invalid")
+      end
       it "passwordが空では登録できない" do
         @user.password_confirmation = ""
         @user.valid?
@@ -49,6 +54,41 @@ describe User do
         @user.password_confirmation = ""
         @user.valid?
         expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password")
+      end
+      it "kana_last_nameは、漢字・ひらがなを受け付けない" do
+        @user.kana_last_name = "漢字・ひらがな"
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Kana last name 全角文字を使用してください")
+      end
+      it "kana_first_nameは、漢字・ひらがなを受け付けない" do
+        @user.kana_first_name = "漢字・ひらがな"
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Kana first name 全角文字を使用してください")
+      end
+      it "last_nameは、半角を受け付けない" do
+        @user.last_name = "ﾊﾝｶｸ"
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Last name 全角文字を使用してください")
+      end
+      it "first_nameは、半角を受け付けない" do
+        @user.first_name = "ﾊﾝｶｸ"
+        @user.valid?
+        expect(@user.errors.full_messages).to include("First name 全角文字を使用してください")
+      end
+      it "kana_last_nameは、半角を受け付けない" do
+        @user.kana_last_name = "ﾊﾝｶｸ"
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Kana last name 全角文字を使用してください")
+      end
+      it "kana_first_nameは、半角を受け付けない" do
+        @user.kana_first_name = "ﾊﾝｶｸ"
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Kana first name 全角文字を使用してください")
+      end
+      it "birthdayが空だと登録できない" do
+        @user.birthday = ""
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Birthday can't be blank")
       end
     end
   end
