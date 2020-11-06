@@ -9,11 +9,6 @@ describe User do
       it "nicknameとemail、passwordとpassword_confirmation、last_name、first_name、kana_last_name、kana_first_name、birthdayが存在すれば登録できる" do
         expect(@user).to be_valid
       end
-      it "passwordが6文字以上の半角英数字" do
-        @user.password = "abc123"
-        @user.password_confirmation = "abc123"
-        expect(@user).to be_valid
-      end
     end
 
     context '新規登録がうまくいかないとき' do
@@ -55,15 +50,27 @@ describe User do
         @user.valid?
         expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password")
       end
+      it "passwordが英語のみでは登録できないこと" do
+        @user.password = "abcdef"
+        @user.password_confirmation = "abcdef"
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password 6文字以上の半角英数字")
+      end
+      it "passwordが数字のみでは登録できないこと" do
+        @user.password = "123456"
+        @user.password_confirmation = "123456"
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password 6文字以上の半角英数字")
+      end
       it "kana_last_nameは、漢字・ひらがなを受け付けない" do
         @user.kana_last_name = "漢字・ひらがな"
         @user.valid?
-        expect(@user.errors.full_messages).to include("Kana last name 全角文字を使用してください")
+        expect(@user.errors.full_messages).to include("Kana last name is invalid")
       end
       it "kana_first_nameは、漢字・ひらがなを受け付けない" do
         @user.kana_first_name = "漢字・ひらがな"
         @user.valid?
-        expect(@user.errors.full_messages).to include("Kana first name 全角文字を使用してください")
+        expect(@user.errors.full_messages).to include("Kana first name is invalid")
       end
       it "last_nameは、半角を受け付けない" do
         @user.last_name = "ﾊﾝｶｸ"
@@ -78,12 +85,12 @@ describe User do
       it "kana_last_nameは、半角を受け付けない" do
         @user.kana_last_name = "ﾊﾝｶｸ"
         @user.valid?
-        expect(@user.errors.full_messages).to include("Kana last name 全角文字を使用してください")
+        expect(@user.errors.full_messages).to include("Kana last name is invalid")
       end
       it "kana_first_nameは、半角を受け付けない" do
         @user.kana_first_name = "ﾊﾝｶｸ"
         @user.valid?
-        expect(@user.errors.full_messages).to include("Kana first name 全角文字を使用してください")
+        expect(@user.errors.full_messages).to include("Kana first name is invalid")
       end
       it "birthdayが空だと登録できない" do
         @user.birthday = ""
