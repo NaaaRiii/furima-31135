@@ -25,7 +25,7 @@ has_many :items
 | product_condition_id | integer    | null: false       |
 | shipping_charge_id   | integer    | null: false       |
 | shipping_area_id     | integer    | null: false       |
-| shipping_day_id     | integer    | null: false       |
+| shipping_day_id      | integer    | null: false       |
 | price                | integer    | null: false       |
 | user                 | references | foreign_key: true |
 
