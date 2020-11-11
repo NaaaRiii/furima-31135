@@ -11,7 +11,7 @@ RSpec.describe Item, type: :model do
     end
   end
 
-  content '商品出品ができないとき' do
+  context '商品出品ができないとき' do
     it "商品名が必須であること" do
       @item.product_name = ""
       @item.valid?
@@ -71,6 +71,26 @@ RSpec.describe Item, type: :model do
       @item.price = 299
       @item.valid?
       expect(@item.errors.full_messages).to include("Price must be greater than or equal to 300")
+    end
+    it "product_condition_idは1では保存できない" do
+      @item.product_condition_id = 1
+      @item.valid?
+      expect(@item.errors.full_messages).to include("Product condition must be other than 1")
+    end
+    it "shipping_charge_id" do
+      @item.shipping_charge_id = 1
+      @item.valid?
+      expect(@item.errors.full_messages).to include("Shipping charge must be other than 1")
+    end
+    it "shipping_area_id" do
+      @item.shipping_area_id = 1
+      @item.valid?
+      expect(@item.errors.full_messages).to include("Shipping area must be other than 1")
+    end
+    it "shipping_day_id" do
+      @item.shipping_day_id = 1
+      @item.valid?
+      expect(@item.errors.full_messages).to include("Shipping day must be other than 1")
     end
   end
 end
