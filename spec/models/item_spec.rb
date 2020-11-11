@@ -6,6 +6,12 @@ RSpec.describe Item, type: :model do
   end
 
   context '商品出品ができるとき' do
+    it '全ての項目が満たされている' do
+      expect(@item).to be_valid
+    end
+  end
+
+  content '商品出品ができないとき' do
     it "商品名が必須であること" do
       @item.product_name = ""
       @item.valid?

@@ -16,13 +16,16 @@ class Item < ApplicationRecord
   validates :shipping_area_id, numericality: { other_than: 1 } 
   validates :shipping_day_id, numericality: { other_than: 1 }
 
-  validates :image,                 presence: true
-  validates :product_name,          presence: true
-  validates :category_id,           presence: true
-  validates :product_condition_id,  presence: true
-  validates :shipping_charge_id,    presence: true
-  validates :shipping_area_id,      presence: true
-  validates :shipping_day_id,       presence: true
+  with_options presence: true do
+    validates :image
+    validates :product_name
+    validates :category_id
+    validates :product_condition_id
+    validates :shipping_charge_id
+    validates :shipping_area_id
+    validates :shipping_day_id
+  end
+  
 
   PRICE_REGEX = /\A[0-9]+\z/.freeze
   validates_format_of :price, with: PRICE_REGEX, message: '半角数字のみ'
