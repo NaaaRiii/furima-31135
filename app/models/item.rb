@@ -9,8 +9,6 @@ class Item < ApplicationRecord
 
   has_one_attached :image
 
-  validates :product_name, :product_description, :category, :product_condition, :shipping_charge, :shipping_area, :shipping_day, :price, :user, presence: true
-
   with_options numericality: { other_than: 1 } do
     validates :category_id
     validates :product_condition_id

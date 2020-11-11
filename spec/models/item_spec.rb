@@ -77,20 +77,25 @@ RSpec.describe Item, type: :model do
       @item.valid?
       expect(@item.errors.full_messages).to include("Product condition must be other than 1")
     end
-    it "shipping_charge_id" do
+    it "shipping_charge_idは1では保存できない" do
       @item.shipping_charge_id = 1
       @item.valid?
       expect(@item.errors.full_messages).to include("Shipping charge must be other than 1")
     end
-    it "shipping_area_id" do
+    it "shipping_area_idは1では保存できない" do
       @item.shipping_area_id = 1
       @item.valid?
       expect(@item.errors.full_messages).to include("Shipping area must be other than 1")
     end
-    it "shipping_day_id" do
+    it "shipping_day_idは1では保存できない" do
       @item.shipping_day_id = 1
       @item.valid?
       expect(@item.errors.full_messages).to include("Shipping day must be other than 1")
+    end
+    it "category_idは1では保存できない" do
+      @item.category_id = 1
+      @item.valid?
+      expect(@item.errors.full_messages).to include("Category must be other than 1")
     end
   end
 end
