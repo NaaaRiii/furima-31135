@@ -19,7 +19,6 @@ class UserPurchase
   validates :phone_number, presence: true, format: { with: VALID_PHONE_NUMBER_REGEX }
 
   def save
-    binding.pry
     purchase = Purchase.create(user_id: user_id, item_id: item_id)
     Address.create(post_number: post_number, shipping_area_id: shipping_area_id, city: city, street_address: street_address, building: building, phone_number: phone_number, purchase_id: purchase.id)    
   end

@@ -1,8 +1,10 @@
 class PurchasesController < ApplicationController
 
-  before_action :authenticate_user!
-  before_action :move_to_index, expect: [:index, :create]
   before_action :find_item, only: [:index, :create]
+  before_action :authenticate_user!
+  before_action :to_index, [:only, :create]
+  before_action :move_to_index, only: [:index, :create]
+  
 
   def index
     @user_purchase = UserPurchase.new
@@ -10,7 +12,6 @@ class PurchasesController < ApplicationController
   
   def create
     @user_purchase = UserPurchase.new(purchase_params)
-    binding.pry
       if @user_purchase.valid?
         pay_item
         @user_purchase.save
@@ -24,6 +25,13 @@ class PurchasesController < ApplicationController
 
   def find_item
     @item = Item.find(params[:item_id])
+  end
+
+  def to_index
+    @item = Item.find(params[:item_id])
+    if @item.purchase != nil
+      redirect_to root_path
+    end 
   end
 
   def move_to_index
