@@ -1,7 +1,7 @@
 class PurchasesController < ApplicationController
 
   before_action :authenticate_user!
-  before_action :move_to_index
+  before_action :move_to_index, expect: [:index, :create]
   before_action :find_item, only: [:index, :create]
 
   def index
@@ -10,6 +10,7 @@ class PurchasesController < ApplicationController
   
   def create
     @user_purchase = UserPurchase.new(purchase_params)
+    binding.pry
       if @user_purchase.valid?
         pay_item
         @user_purchase.save
@@ -33,7 +34,7 @@ class PurchasesController < ApplicationController
   end
 
   def purchase_params
-    params.permit(:token, :item_id, :post_number, :shipping_area_id, :city, :street_address, :building, :phone_number, :purchase).merge(user_id: current_user.id)
+    params.require(:user_purchase).permit(:post_number, :shipping_area_id, :city, :street_address, :building, :phone_number, :purchase).merge(token: params[:token], item_id: params[:item_id], user_id: current_user.id)
   end
 
   def pay_item
