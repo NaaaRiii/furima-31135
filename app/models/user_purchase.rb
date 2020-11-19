@@ -1,26 +1,24 @@
-class UserPurchase
+class UserPurchase 
   include ActiveModel::Model
-  attr_accessor :post_number, :prefecture_id, :city, :street_adress, :building, :phone_number
+  attr_accessor :token, :post_number, :shipping_area_id, :city, :street_address, :building, :phone_number, :item_id, :user_id, :purchase_id
 
   with_options presense: true do
-    validates :post_number
-    validates :prefecture_id
     validates :city
-    validates :street_adress
-    validates :building
+    validates :street_address
     validates :phone_number
+    validates :token
+    validates :purchase_id
   end
 
-  with_options numericality: { other_than: 1 } do
-    validates :prefecture_id
+  # 「住所」の郵便番号に関するバリデーション
+  validates :post_number, presense: true, format: {with: /\A[0-9]{3}-[0-9]{4}\z/, message: "is invalid. Include hyphen(-)"}
+
+  with_options presense: true, numericality: { other_than: 1 } do
+    validates :shipping_area_id
   end
 
   def save
-    # ユーザーの情報を保存し、「user」という変数に入れている
-    user = User.create(nickname: nickname)
-    # 住所の情報を保存
-    Address.create(post_number: post_number, prefecture_id: prefecture_id, city: city, street_adress: street_adress, building: building, phone_number: phone_number, user_id: user.id)
-    # 購入の情報を保存
-    Purchase.create(user_id: user.id, item_id: item.id)
+    purchase = Purchase.create(user_id: user_id, item_id: item_id)
+    Address.create(post_number: post_number, shipping_area_id: shipping_area_id, city: city, street_address: street_address, building: building, phone_number: phone_number, purchase_id: purchase.id)    
   end
 end
