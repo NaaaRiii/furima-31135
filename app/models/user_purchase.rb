@@ -6,6 +6,8 @@ class UserPurchase
     validates :city
     validates :street_address
     validates :token
+    validates :user_id
+    validates :item_id
   end
 
   # 「住所」の郵便番号に関するバリデーション
