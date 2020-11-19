@@ -8,7 +8,6 @@ RSpec.describe Purchase, type: :model do
 
     it 'すべての値が正しく入力されていれば保存できること' do
       expect(@user_purchase).to be_valid
-      binding.pry
     end
 
     it "post_numberが空では登録できないこと" do
@@ -20,13 +19,13 @@ RSpec.describe Purchase, type: :model do
     it "post_numberは半角のハイフンを含んだ正しい形式でないと保存できないこと" do
       @user_purchase.post_number = '1234567'
       @user_purchase.valid?
-      expect(@user_purchase.errors.full_messages).to include("Post Number is invalid. Include hyphen(-)")
+      expect(@user_purchase.errors.full_messages).to include("Post number is invalid. Include hyphen(-)")
     end
 
-    it "shipping_area_idを選択していないと保存できないこと" do
-      @user_purchase.shipping_area_id = 0
+    it "shipping_area_idは1では保存できないこと" do
+      @user_purchase.shipping_area_id = 1
       @user_purchase.valid?
-      expect(@user_purchase.errors.full_messages).to include("Shipping Area can't be blank")
+      expect(@user_purchase.errors.full_messages).to include("Shipping area must be other than 1")
     end
 
     it "cityがからでは保存できないこと" do
@@ -38,7 +37,7 @@ RSpec.describe Purchase, type: :model do
     it "street_addressがからでは保存できないこと" do
       @user_purchase.street_address = nil
       @user_purchase.valid?
-      expect(@user_purchase.errors.full_messages).to include("Street Address can't be blank")
+      expect(@user_purchase.errors.full_messages).to include("Street address can't be blank")
     end
 
     it 'buildingは空でも保存できること' do
@@ -49,16 +48,13 @@ RSpec.describe Purchase, type: :model do
     it "phone_numberがからでは保存できないこと" do
       @user_purchase.phone_number = nil
       @user_purchase.valid?
-      expect(@user_purchase.errors.full_messages).to include("Phone Number can't be blank")
+      expect(@user_purchase.errors.full_messages).to include("Phone number can't be blank")
     end
 
-    it "電話番号にはハイフンは不要あること" do
-      @user_purchase.phone_number = "090-1234-1234"
+    it "phone_numberはハイフンは不要で、11桁以内であること" do
+      @user_purchase.phone_number = "090123412345"
       @user_purchase.valid?
-      expect(@user_purchase.errors.full_messages).to include("Phone")
-    end
-
-    it "11桁以内であること（09012341234となる" do
+      expect(@user_purchase.errors.full_messages).to include("Phone number is invalid")
     end
 
     it "tokenが空では登録できないこと" do
