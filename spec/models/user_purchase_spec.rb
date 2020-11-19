@@ -1,15 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe Purchase, type: :model do
-  describe "購入情報の保存" do
-    before do
-      @user_purchase = FactoryBot.build(:user_purchase)
-    end
+  before do
+    @user_purchase = FactoryBot.build(:user_purchase)
+  end
 
+  content "購入できる時" do
     it 'すべての値が正しく入力されていれば保存できること' do
       expect(@user_purchase).to be_valid
     end
+  end
 
+  content "購入できない時" do
     it "post_numberが空では登録できないこと" do
       @user_purchase.post_number = nil
       @user_purchase.valid?
@@ -51,8 +53,14 @@ RSpec.describe Purchase, type: :model do
       expect(@user_purchase.errors.full_messages).to include("Phone number can't be blank")
     end
 
-    it "phone_numberはハイフンは不要で、11桁以内であること" do
+    it "phone_numberは11桁以内であること" do
       @user_purchase.phone_number = "090123412345"
+      @user_purchase.valid?
+      expect(@user_purchase.errors.full_messages).to include("Phone number is invalid")
+    end
+
+    it "phone_numberはハイフンは不要であること" do
+      @user_purchase.phone_number = "090-1234-1234"
       @user_purchase.valid?
       expect(@user_purchase.errors.full_messages).to include("Phone number is invalid")
     end
