@@ -4,9 +4,10 @@
 // that code so it'll be compiled.
 
 require("@rails/ujs").start()
-require("turbolinks").start()
+// require("turbolinks").start() 振り返った際の備忘録にしたいため、残します！
 require("channels")
 require("../item_price");
+require("../card")
 
 
 
